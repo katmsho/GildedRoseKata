@@ -10,9 +10,9 @@ Would normally verify these with product/client.
 - Once quality reaches zero it cannot be sold
 - Aged Brie reduces in quality after the sellin is reached, as per standard items (even aged cheese has a limit!)
 - Aged Brie will be defined as having the exact string 'Aged Brie' as the name of the item. Any other text or change of spelling/capitalisation will not trigger the special handling.
-- Sulfurus will be defined as having the exact string 'Sulfurus' at the beginning of the item name. Any change of spelling/capitalisation will not trigger the special handling. Any additional text after 'Sulfurus' will be ignored. 
-- Sulfurus quality is always 80 and does not change
-- Sulfurus sellin is always 0 as it is legendary and is not in stock
+- Sulfuras will be defined as having the exact string 'Sulfuras' at the beginning of the item name. Any change of spelling/capitalisation will not trigger the special handling. Any additional text after 'Sulfuras' will be ignored. 
+- Sulfuras quality is always 80 and does not change
+- Sulfuras sellin is always 0 as it is legendary and is not in stock
 - Backstage passes will be defined as having the exact string 'Backstage passes'  at the beginning of the item name. Any change of spelling/capitalisation will not trigger the special handling. Any additional text after 'Backstage passes' will be ignored. 
 - Tests on the Item class - reasonable inital values, name length etc need to be written by the goblin as the owner of that code
 
@@ -23,7 +23,7 @@ Would normally verify these with product/client.
 
 ## Tests
 
-- Special Case Sulfurus
+- Special Case Sulfuras
 -- quality always =80
 -- sellin always =0
 
@@ -38,7 +38,7 @@ Would normally verify these with product/client.
 -- sellin =0 quality = 0
 
 - Quality Maximun
--- Excluding Sulfurus, quality maximum = 50
+-- Excluding Sulfuras, quality maximum = 50
 
 - Quality Minimum
 -- Quality minimum = 0

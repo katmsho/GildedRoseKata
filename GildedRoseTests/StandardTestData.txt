@@ -1,4 +1,32 @@
+Standard Items
 {Name = "+5 Dexterity Vest", SellIn = 10, Quality = 20},
-{Name = "Aged Brie", SellIn = 2, Quality = 0},
-{Name = "Elixir of the Mongoose", SellIn = 5, Quality = 7},
+{Name = "Too Old to Sell", SellIn = 0, Quality = 20},
+{Name = "Don't go below 0 quality", SellIn = 0, Quality = 1},
+{Name = "Don't go below 0 quality", SellIn = 0, Quality = 0},
+
+Aged Brie
+{Name = "Aged Brie", SellIn = 1, Quality = 49},
+{Name = "Aged Brie", SellIn = 1, Quality = 50},
+{Name = "Aged Brie", SellIn = 0, Quality = 2},
+{Name = "Aged Brie", SellIn = 0, Quality = 1},
+{Name = "Very Aged Brie", SellIn = 5, Quality = 7},
+{Name = "Aged Brie with more text", SellIn = 5, Quality = 7},
+{Name = "aged brie", SellIn = 5, Quality = 7},
+{Name = "AGED BRIE", SellIn = 5, Quality = 7},
+
+Sulfuras
 {Name = "Sulfuras, Hand of Ragnaros", SellIn = 0, Quality = 80},
+{Name = "Hand of Ragnaros, Sulfuras", SellIn = 0, Quality = 80},
+{Name = "sulfuras, Hand of Ragnaros", SellIn = 0, Quality = 80},
+{Name = "SULFURAS, Hand of Ragnaros", SellIn = 0, Quality = 80},
+
+Backstage passes
+{Name = "Backstage passes days >10  ", SellIn = 15, Quality = 20},
+{Name = "Backstage passes >5 days <=10", SellIn = 10, Quality = 40},
+{Name = "Backstage passes >5 days <=10", SellIn = 10, Quality = 49},
+{Name = "Backstage passes >5 days <=10", SellIn = 10, Quality = 50},
+{Name = "Backstage passes days <=5 ", SellIn = 5, Quality = 40},
+{Name = "Backstage passes days <=5 ", SellIn = 5, Quality = 49},
+{Name = "Backstage passes days <=5 ", SellIn = 5, Quality = 50},
+{Name = "Backstage passes days =0 ", SellIn = 0, Quality = 50},
+{Name = "Backstage passes days =0 ", SellIn = 0, Quality = 0},
