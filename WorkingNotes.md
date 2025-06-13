@@ -1,6 +1,7 @@
 # Notes
 
 12/06/25 Initial notes, assumptions and todo list after reading requirements: https://github.com/emilybache/GildedRose-Refactoring-Kata/blob/main/GildedRoseRequirements.md
+13/06/25 Draft of tests, updated assumptions and todo list. Decided to have one set of items covering all edge cases so only need to run one update cycle instead of running 
 
 # Assumptions 
 Would normally verify these with product/client.
@@ -15,11 +16,16 @@ Would normally verify these with product/client.
 - Sulfuras sellin is always 0 as it is legendary and is not in stock
 - Backstage passes will be defined as having the exact string 'Backstage passes'  at the beginning of the item name. Any change of spelling/capitalisation will not trigger the special handling. Any additional text after 'Backstage passes' will be ignored. 
 - Tests on the Item class - reasonable inital values, name length etc need to be written by the goblin as the owner of that code
+- SellIn date should roughly align to when the Quality approaches zero. No information given to know this, so will not test for it. To be verified with Product
 
 
 # TODO
 
 - Conjured items. Will do as change request after initial requirements are tested and delivered
+- Split out asserts into separate tests
+- Name tests expressively
+- Code should look for 'Backstage passes' not full Name
+- Verify whether the days/quality change for the backstage passes change on the SellIn date or the day after. Will assume what code does is correct.
 
 ## Tests
 
