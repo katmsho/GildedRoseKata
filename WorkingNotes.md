@@ -3,6 +3,7 @@
 - 12/06/25 Initial notes, assumptions and todo list after reading requirements: https://github.com/emilybache/GildedRose-Refactoring-Kata/blob/main/GildedRoseRequirements.md
 - 13/06/25 Draft of tests, updated assumptions and todo list. Decided to have one set of items covering all edge cases so only need to run one update cycle instead of running mutliple days and looking at output
 - 13/06/25 Split tests into separate classes / tests. Created constants for numerical values.
+- 24/06/25 Refactored program to deal with special cases first and exit that iteration of loop as early as possible. The makes the code more readable and easier to understand rather than having multiple repeated nested if statements checking the names. Also moved to have specific statements to add/minus 1/2/3 to quality as required, rather than repeatedly adding +1/-1, again for readability/maintainability. It is easier to see what it happening when each situation is handled by a specific piece of code, rather than spread out across multiple if blocks. 
 
 # Assumptions 
 Would normally verify these with product/client.

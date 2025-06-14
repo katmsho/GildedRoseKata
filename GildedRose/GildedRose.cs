@@ -16,17 +16,17 @@ public class GildedRose
     {
         for (var i = 0; i < Items.Count; i++)
         {
-            //SPECIAL CASE
-            //if Sulfuras, no change so skip this iteration of loop
+            //SPECIAL CASE Sulfuras
+            //if Sulfuras, no change 
             if (Items[i].Name == "Sulfuras, Hand of Ragnaros")
             {
                 continue;
             }
-            
+
             Items[i].SellIn = Items[i].SellIn - 1;
 
             //SPECIAL CASE Aged Brie
-            // increases in quality +1 before and on SellIn, +2 after sellIn
+            //increases in quality +1 before and on SellIn, +2 after sellIn
             if (Items[i].Name == "Aged Brie")
             {
                 if (Items[i].SellIn >= 0)
@@ -41,45 +41,47 @@ public class GildedRose
                 continue;
             }
 
-            //if standard item (i.e. not aged brie or backstage pass) reduce quality by 1
-            if ( Items[i].Name != "Backstage passes to a TAFKAL80ETC concert")
+            //SPECIAL CASE Backstage pass
+            //Quality increases by as its SellIn value approaches
+            //Quality increases by 2 when there are 10 days or less 
+            //Quality increases by 3 when there are 5 days or less 
+            //Quality drops to 0 after the concert
+
+            if (Items[i].Name == "Backstage passes to a TAFKAL80ETC concert")
+            {
+                if (Items[i].SellIn >= 0)
+                {
+                    if (Items[i].SellIn >= 10)
+                    {
+                        Items[i].Quality = Math.Clamp(Items[i].Quality + 1, 0, 50);
+                    }
+                    if (Items[i].SellIn < 10 && Items[i].SellIn >= 5)
+                    {
+                        Items[i].Quality = Math.Clamp(Items[i].Quality + 2, 0, 50);
+                    }
+                    if (Items[i].SellIn < 5)
+                    {
+                        Items[i].Quality = Math.Clamp(Items[i].Quality + 3, 0, 50);
+                    }
+                }
+                else //is after SellIn
+                {
+                    Items[i].Quality = 0;
+                }
+
+                continue;
+            }
+
+            //standard item
+            if (Items[i].SellIn >= 0)
             {
                 Items[i].Quality = Math.Clamp(Items[i].Quality - 1, 0, 50);
             }
-            else // must be aged brie or backstage pass
+            else
             {
-                if (Items[i].Quality < 50)
-                {
-                    Items[i].Quality = Math.Clamp(Items[i].Quality + 1, 0, 50); // add 1 to quality always to aged brie and backstage pass
-
-                    if (Items[i].Name == "Backstage passes to a TAFKAL80ETC concert")
-                    {
-                        if (Items[i].SellIn < 10)
-                        {
-                            Items[i].Quality = Math.Clamp(Items[i].Quality + 1, 0, 50); // if backstage pass and 10 days or less add extra 1 to quality                            
-                        }
-
-                        if (Items[i].SellIn < 5)
-                        {
-                            Items[i].Quality = Math.Clamp(Items[i].Quality + 1, 0, 50); // if backstage pass and 5 days or less add extra 1 to quality                            
-                        }
-                    }
-                }
-            }      
- 
-            if (Items[i].SellIn < 0) //Past SellIn date so reduce quality by 1 again
-            {
-
-                    if (Items[i].Name != "Backstage passes to a TAFKAL80ETC concert")
-                    {
-                         Items[i].Quality = Math.Clamp(Items[i].Quality - 1, 0, 50); //reduce by 1 if not agedBrie or backstage pass 
-                    }
-                    else
-                    {
-                        Items[i].Quality = 0; // set to zero if is backstage pass
-                    }
- 
+                Items[i].Quality = Math.Clamp(Items[i].Quality - 2, 0, 50);
             }
+
         }
-    }
+    }    
 }
