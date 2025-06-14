@@ -20,6 +20,7 @@ public class GildedRose {
     }
 
     public void UpdateQuality() {
+
         foreach (Item item in this.Items) {
 
             //SPECIAL CASE Sulfuras

@@ -1,9 +1,14 @@
-# Notes
+# Changes
 
 - 12/06/25 Initial notes, assumptions and todo list after reading requirements: https://github.com/emilybache/GildedRose-Refactoring-Kata/blob/main/GildedRoseRequirements.md
 - 13/06/25 Draft of tests, updated assumptions and todo list. Decided to have one set of items covering all edge cases so only need to run one update cycle instead of running mutliple days and looking at output
 - 13/06/25 Split tests into separate classes / tests. Created constants for numerical values.
 - 24/06/25 Refactored program to deal with special cases first and exit that iteration of loop as early as possible. The makes the code more readable and easier to understand rather than having multiple repeated nested if statements checking the names. Also moved to have specific statements to add/minus 1/2/3 to quality as required, rather than repeatedly adding +1/-1, again for readability/maintainability. It is easier to see what it happening when each situation is handled by a specific piece of code, rather than spread out across multiple if blocks. 
+
+# Notes
+Could do switch instead of if statements, but overkill now. Plus would need to handle the 'StartsWith' for the special names
+Could implement logging, validation etc but not the point of this kata
+Now got basic code refactored & understandable consider patterns / factory. With current number of 'special cases' not really necessary, but already have one change request for another (conjured items)
 
 # Assumptions 
 Would normally verify these with product/client.
@@ -26,7 +31,7 @@ Would normally verify these with product/client.
 - Conjured items. Will do as change request after initial requirements are tested and delivered
 - ~~Split out asserts into separate tests~~
 - ~~Name tests expressively~~
-- Code should look for 'Backstage passes' not full Name
+- ~~Code should look for 'Backstage passes' not full Name~~
 - ~~Verify whether the days/quality change for the backstage passes change on the SellIn date or the day after. Will assume what code does is correct.~~  On  SellIn=0 is lthe last day for +3, SellIn=5 for +2, SellIn=10 for +1
 
 ## Tests
