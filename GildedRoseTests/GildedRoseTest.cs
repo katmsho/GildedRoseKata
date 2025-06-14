@@ -270,7 +270,7 @@ public class GildedRoseQualityTest  : GildedRoseTest
             var currentAgedBrieQuality = agedBrie.Item.Quality;
             var previousAgedBrieQuality = previousItems[agedBrie.Index].Quality;
 
-            if (agedBrie.Item.SellIn < 0) // aged brie past sellIn is covered on standard past-sellIn test
+            if (agedBrie.Item.SellIn < 0) 
             {
                 if (previousAgedBrieQuality == QUALITY_MAXIMUM)
                 {
