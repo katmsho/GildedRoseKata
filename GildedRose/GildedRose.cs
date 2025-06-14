@@ -14,23 +14,22 @@ public class GildedRose
 
     public void UpdateQuality()
     {
-        for (var i = 0; i < Items.Count; i++)
+        foreach (Item item in Items)
         {
             //SPECIAL CASE Sulfuras
             //if Sulfuras, no change 
-            if (Items[i].Name == "Sulfuras, Hand of Ragnaros")
+            if (item.Name == "Sulfuras, Hand of Ragnaros")
             {
                 continue;
             }
 
-            Items[i].SellIn = Items[i].SellIn - 1;
+            item.SellIn = item.SellIn - 1;
 
             //SPECIAL CASE Aged Brie
             //increases in quality +1 before and on SellIn, +2 after sellIn
-            if (Items[i].Name == "Aged Brie")
+            if (item.Name == "Aged Brie")
             {
-                HandleAgedBrie(Items[i]);
-
+                HandleAgedBrie(item);
                 continue;
             }
 
@@ -39,20 +38,20 @@ public class GildedRose
             //Quality increases by 2 when there are 10 days or less 
             //Quality increases by 3 when there are 5 days or less 
             //Quality drops to 0 after the concert
-            if (Items[i].Name == "Backstage passes to a TAFKAL80ETC concert")
+            if (item.Name == "Backstage passes to a TAFKAL80ETC concert")
             {
-                HandleBackstagePass(Items[i]);
+                HandleBackstagePass(item);
                 continue;
             }
 
             //standard item
-            if (Items[i].SellIn >= 0)
+            if (item.SellIn >= 0)
             {
-                Items[i].Quality = Math.Clamp(Items[i].Quality - 1, 0, 50);
+                item.Quality = Math.Clamp(item.Quality - 1, 0, 50);
             }
             else
             {
-                Items[i].Quality = Math.Clamp(Items[i].Quality - 2, 0, 50);
+                item.Quality = Math.Clamp(item.Quality - 2, 0, 50);
             }
 
         }
@@ -71,7 +70,7 @@ public class GildedRose
     }
 
     private void HandleBackstagePass(Item item)
-    { 
+    {
         if (item.SellIn >= 0)
         {
             if (item.SellIn >= 10)
@@ -87,8 +86,8 @@ public class GildedRose
                 item.Quality = Math.Clamp(item.Quality + 3, 0, 50);
             }
         }
-        else //is after SellIn
-        {
+        else
+        { //is after SellIn
             item.Quality = 0;
         }
     }
