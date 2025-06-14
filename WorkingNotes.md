@@ -10,12 +10,12 @@ Would normally verify these with product/client.
 - Quality reduces by 1 per day on standard items before the sellin date
 - Quality reduces by 2 per day on standard items after the sellin date
 - Once quality reaches zero it cannot be sold
-- Aged Brie reduces in quality after the sellin is reached, as per standard items (even aged cheese has a limit!)
+- ~~Aged Brie reduces in quality after the sellin is reached, as per standard items (even aged cheese has a limit!)~~ Incorrect - Aged Brie increases by 2 after SellIn reaches zero
 - Aged Brie will be defined as having the exact string 'Aged Brie' as the name of the item. Any other text or change of spelling/capitalisation will not trigger the special handling.
 - Sulfuras will be defined as having the exact string 'Sulfuras' at the beginning of the item name. Any change of spelling/capitalisation will not trigger the special handling. Any additional text after 'Sulfuras' will be ignored. 
 - Sulfuras quality is always 80 and does not change
 - Sulfuras sellIn is always 0 as it is legendary and is not in stock
-- Backstage passes will be defined as having the exact string 'Backstage passes'  at the beginning of the item name. Any change of spelling/capitalisation will not trigger the special handling. Any additional text after 'Backstage passes' will be ignored. 
+- Backstage passes will be defined as having the exact string 'Backstage passes' at the beginning of the item name. Any change of spelling/capitalisation will not trigger the special handling. Any additional text after 'Backstage passes' will be ignored. 
 - Tests on the Item class - reasonable inital values, name length etc need to be written by the goblin as the owner of that code
 - Should SellIn date roughly align to when the Quality approaches zero? No information given to know this, so will not test for it.
 

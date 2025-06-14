@@ -20,10 +20,11 @@ public class GildedRoseTest
    public const int QUALITY_SULFURAS = 80;
    public const int QUALITY_CHANGE_PER_DAY = -1;
    public const int QUALITY_CHANGE_PER_DAY_AFTER_SELLIN = -2;
-  public  const int QUALITY_CHANGE_PER_DAY_AGED_BRIE = 1;
-  public  const int QUALITY_CHANGE_PER_DAY_BACKSTAGE_PASS_10_DAYS = 1;
+   public  const int QUALITY_CHANGE_PER_DAY_AGED_BRIE = 1;
+   public  const int QUALITY_CHANGE_PER_DAY_AGED_BRIE_AFTER_SELLIN = 2;
+   public const int QUALITY_CHANGE_PER_DAY_BACKSTAGE_PASS_10_DAYS = 1;
    public const int QUALITY_CHANGE_PER_DAY_BACKSTAGE_PASS_5_TO_10_DAYS = 2;
-  public  const int QUALITY_CHANGE_PER_DAY_BACKSTAGE_PASS_0_TO_5_DAYS = 3;
+   public  const int QUALITY_CHANGE_PER_DAY_BACKSTAGE_PASS_0_TO_5_DAYS = 3;
 
 
 }
@@ -154,6 +155,7 @@ public class GildedRoseQualityTest  : GildedRoseTest
             new Item {Name = "Too Old to Sell", SellIn = 0, Quality = 20},
             new Item {Name = "Don't go below 0 quality", SellIn = 0, Quality = 1},
             new Item {Name = "Don't go below 0 quality", SellIn = 0, Quality = 0},
+            new Item {Name = "Aged Brie", SellIn = 5, Quality = 5},
             new Item {Name = "Aged Brie", SellIn = 1, Quality = QUALITY_MAXIMUM-1},
             new Item {Name = "Aged Brie", SellIn = 1, Quality = QUALITY_MAXIMUM},
             new Item {Name = "Aged Brie", SellIn = 0, Quality = 2},
@@ -232,7 +234,7 @@ public class GildedRoseQualityTest  : GildedRoseTest
 
     //SPECIAL CASE: Aged Brie
     [Test]
-    public void AgedBrieIncreasesQualityBy1PerDay()
+    public void AgedBrieIncreasesQualityBy1PerDayBeforeSellIn()
     { 
         List<ItemWithIndex> agedBrieItems = this.currentItems.Select((item, index) => new ItemWithIndex { Item = item, Index = index })
                                             .Where(ItemWithIndex => ItemWithIndex.Item.Name.StartsWith("Aged Brie", System.StringComparison.CurrentCulture))
@@ -243,7 +245,7 @@ public class GildedRoseQualityTest  : GildedRoseTest
             var currentAgedBrieQuality = agedBrie.Item.Quality;
             var previousAgedBrieQuality = previousItems[agedBrie.Index].Quality;
 
-            if (agedBrie.Item.SellIn > 0) // aged brie past sellIn is covered on standard past-sellIn test
+            if (agedBrie.Item.SellIn >= 0) // aged brie past sellIn is covered on standard past-sellIn test
             {
                 if (previousAgedBrieQuality == QUALITY_MAXIMUM)
                 {
@@ -252,6 +254,31 @@ public class GildedRoseQualityTest  : GildedRoseTest
                 else
                 {
                     Assert.That(currentAgedBrieQuality == previousAgedBrieQuality + QUALITY_CHANGE_PER_DAY_AGED_BRIE);
+                }
+            }
+        }
+    }
+    [Test]
+    public void AgedBrieIncreasesQualityBy2PerDayAfterSellIn()
+    { 
+        List<ItemWithIndex> agedBrieItems = this.currentItems.Select((item, index) => new ItemWithIndex { Item = item, Index = index })
+                                            .Where(ItemWithIndex => ItemWithIndex.Item.Name.StartsWith("Aged Brie", System.StringComparison.CurrentCulture))
+                                            .ToList();
+
+        foreach (ItemWithIndex agedBrie in agedBrieItems)
+        {
+            var currentAgedBrieQuality = agedBrie.Item.Quality;
+            var previousAgedBrieQuality = previousItems[agedBrie.Index].Quality;
+
+            if (agedBrie.Item.SellIn < 0) // aged brie past sellIn is covered on standard past-sellIn test
+            {
+                if (previousAgedBrieQuality == QUALITY_MAXIMUM)
+                {
+                    Assert.That(currentAgedBrieQuality == previousAgedBrieQuality);
+                }
+                else
+                {
+                    Assert.That(currentAgedBrieQuality == previousAgedBrieQuality + QUALITY_CHANGE_PER_DAY_AGED_BRIE_AFTER_SELLIN);
                 }
             }
         }
