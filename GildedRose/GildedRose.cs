@@ -23,10 +23,26 @@ public class GildedRose
                 continue;
             }
             
-             Items[i].SellIn = Items[i].SellIn - 1;  
+            Items[i].SellIn = Items[i].SellIn - 1;
+
+            //SPECIAL CASE Aged Brie
+            // increases in quality +1 before and on SellIn, +2 after sellIn
+            if (Items[i].Name == "Aged Brie")
+            {
+                if (Items[i].SellIn >= 0)
+                {
+                    Items[i].Quality = Math.Clamp(Items[i].Quality + 1, 0, 50);
+                }
+                else
+                {
+                    Items[i].Quality = Math.Clamp(Items[i].Quality + 2, 0, 50);
+                }
+
+                continue;
+            }
 
             //if standard item (i.e. not aged brie or backstage pass) reduce quality by 1
-            if (Items[i].Name != "Aged Brie" && Items[i].Name != "Backstage passes to a TAFKAL80ETC concert")
+            if ( Items[i].Name != "Backstage passes to a TAFKAL80ETC concert")
             {
                 Items[i].Quality = Math.Clamp(Items[i].Quality - 1, 0, 50);
             }
@@ -34,7 +50,7 @@ public class GildedRose
             {
                 if (Items[i].Quality < 50)
                 {
-                    Items[i].Quality = Items[i].Quality + 1; // add 1 to quality always to aged brie and backstage pass
+                    Items[i].Quality = Math.Clamp(Items[i].Quality + 1, 0, 50); // add 1 to quality always to aged brie and backstage pass
 
                     if (Items[i].Name == "Backstage passes to a TAFKAL80ETC concert")
                     {
@@ -53,8 +69,7 @@ public class GildedRose
  
             if (Items[i].SellIn < 0) //Past SellIn date so reduce quality by 1 again
             {
-                if (Items[i].Name != "Aged Brie")
-                {
+
                     if (Items[i].Name != "Backstage passes to a TAFKAL80ETC concert")
                     {
                          Items[i].Quality = Math.Clamp(Items[i].Quality - 1, 0, 50); //reduce by 1 if not agedBrie or backstage pass 
@@ -63,11 +78,7 @@ public class GildedRose
                     {
                         Items[i].Quality = 0; // set to zero if is backstage pass
                     }
-                }
-                else
-                {
-                    Items[i].Quality = Math.Clamp(Items[i].Quality + 1, 0, 50); //if Aged Brie add 1 to quality  
-                }
+ 
             }
         }
     }
