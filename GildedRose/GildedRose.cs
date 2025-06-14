@@ -15,14 +15,17 @@ public class GildedRose
     {
         for (var i = 0; i < Items.Count; i++)
         {
+            //if Sulfuras, no change so skip this iteration of loop
+            if (Items[i].Name == "Sulfuras, Hand of Ragnaros")
+            {
+                continue;
+            }
+
             if (Items[i].Name != "Aged Brie" && Items[i].Name != "Backstage passes to a TAFKAL80ETC concert")
             {
                 if (Items[i].Quality > 0)
                 {
-                    if (Items[i].Name != "Sulfuras, Hand of Ragnaros")
-                    {
-                        Items[i].Quality = Items[i].Quality - 1;
-                    }
+                    Items[i].Quality = Items[i].Quality - 1;                    
                 }
             }
             else
@@ -52,11 +55,8 @@ public class GildedRose
                 }
             }
 
-            if (Items[i].Name != "Sulfuras, Hand of Ragnaros")
-            {
-                Items[i].SellIn = Items[i].SellIn - 1;
-            }
-
+            Items[i].SellIn = Items[i].SellIn - 1;
+ 
             if (Items[i].SellIn < 0)
             {
                 if (Items[i].Name != "Aged Brie")
@@ -65,10 +65,7 @@ public class GildedRose
                     {
                         if (Items[i].Quality > 0)
                         {
-                            if (Items[i].Name != "Sulfuras, Hand of Ragnaros")
-                            {
-                                Items[i].Quality = Items[i].Quality - 1;
-                            }
+                            Items[i].Quality = Items[i].Quality - 1;                           
                         }
                     }
                     else
