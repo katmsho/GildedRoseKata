@@ -5,6 +5,15 @@ namespace GildedRoseKata;
 
 public class GildedRose {
     public IList<Item> Items;
+    public const int QUALITY_MAXIMUM = 50;
+    public const int QUALITY_MINIMUM = 0;
+    public const int QUALITY_CHANGE_PER_DAY = -1;
+    public const int QUALITY_CHANGE_PER_DAY_AFTER_SELLIN = -2;
+    public const int QUALITY_CHANGE_PER_DAY_AGED_BRIE = 1;
+    public const int QUALITY_CHANGE_PER_DAY_AGED_BRIE_AFTER_SELLIN = 2;
+    public const int QUALITY_CHANGE_PER_DAY_BACKSTAGE_PASS_10_DAYS = 1;
+    public const int QUALITY_CHANGE_PER_DAY_BACKSTAGE_PASS_5_TO_10_DAYS = 2;
+    public const int QUALITY_CHANGE_PER_DAY_BACKSTAGE_PASS_0_TO_5_DAYS = 3;
 
     public GildedRose(IList<Item> Items) {
         this.Items = Items;
@@ -43,10 +52,10 @@ public class GildedRose {
     /// </summary>
     private void HandleAgedBrie(Item item) {
         if (item.SellIn >= 0) {
-            item.Quality = Math.Clamp(item.Quality + 1, 0, 50);
+            item.Quality = Math.Clamp(item.Quality + QUALITY_CHANGE_PER_DAY_AGED_BRIE, QUALITY_MINIMUM, QUALITY_MAXIMUM);
         }
         else {
-            item.Quality = Math.Clamp(item.Quality + 2, 0, 50);
+            item.Quality = Math.Clamp(item.Quality + QUALITY_CHANGE_PER_DAY_AGED_BRIE_AFTER_SELLIN, QUALITY_MINIMUM, QUALITY_MAXIMUM);
         }
     }
 
@@ -59,13 +68,13 @@ public class GildedRose {
     private void HandleBackstagePass(Item item) {
         if (item.SellIn >= 0) {
             if (item.SellIn >= 10) {
-                item.Quality = Math.Clamp(item.Quality + 1, 0, 50);
+                item.Quality = Math.Clamp(item.Quality + QUALITY_CHANGE_PER_DAY_BACKSTAGE_PASS_10_DAYS, QUALITY_MINIMUM, QUALITY_MAXIMUM);
             }
             if (item.SellIn < 10 && item.SellIn >= 5) {
-                item.Quality = Math.Clamp(item.Quality + 2, 0, 50);
+                item.Quality = Math.Clamp(item.Quality + QUALITY_CHANGE_PER_DAY_BACKSTAGE_PASS_5_TO_10_DAYS, QUALITY_MINIMUM, QUALITY_MAXIMUM);
             }
             if (item.SellIn < 5) {
-                item.Quality = Math.Clamp(item.Quality + 3, 0, 50);
+                item.Quality = Math.Clamp(item.Quality + QUALITY_CHANGE_PER_DAY_BACKSTAGE_PASS_0_TO_5_DAYS, QUALITY_MINIMUM, QUALITY_MAXIMUM);
             }
         }
         else { //is after SellIn
@@ -79,10 +88,10 @@ public class GildedRose {
     /// </summary>
     private void HandleStandardItem(Item item) {
         if (item.SellIn >= 0) {
-            item.Quality = Math.Clamp(item.Quality - 1, 0, 50);
+            item.Quality = Math.Clamp(item.Quality + QUALITY_CHANGE_PER_DAY, QUALITY_MINIMUM, QUALITY_MAXIMUM);
         }
         else {
-            item.Quality = Math.Clamp(item.Quality - 2, 0, 50);
+            item.Quality = Math.Clamp(item.Quality + QUALITY_CHANGE_PER_DAY_AFTER_SELLIN, QUALITY_MINIMUM, QUALITY_MAXIMUM);
         }
     }
 
