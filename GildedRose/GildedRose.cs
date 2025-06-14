@@ -14,11 +14,12 @@ public class GildedRose
 
     public void UpdateQuality()
     {
+
         foreach (Item item in Items)
         {
             //SPECIAL CASE Sulfuras
             //if Sulfuras, no change 
-            if (item.Name == "Sulfuras, Hand of Ragnaros")
+            if (item.Name.StartsWith("Sulfuras"))
             {
                 continue;
             }
@@ -27,7 +28,7 @@ public class GildedRose
 
             //SPECIAL CASE Aged Brie
             //increases in quality +1 before and on SellIn, +2 after sellIn
-            if (item.Name == "Aged Brie")
+            if (item.Name.StartsWith("Aged Brie"))
             {
                 HandleAgedBrie(item);
                 continue;
@@ -38,7 +39,7 @@ public class GildedRose
             //Quality increases by 2 when there are 10 days or less 
             //Quality increases by 3 when there are 5 days or less 
             //Quality drops to 0 after the concert
-            if (item.Name == "Backstage passes to a TAFKAL80ETC concert")
+            if (item.Name.StartsWith("Backstage passes"))
             {
                 HandleBackstagePass(item);
                 continue;
@@ -46,7 +47,6 @@ public class GildedRose
 
             //must be standard item
             HandleStandardItem(item);
-
         }
     }
 
