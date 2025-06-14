@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace GildedRoseKata;
 
@@ -23,13 +24,11 @@ public class GildedRose
             }
             
              Items[i].SellIn = Items[i].SellIn - 1;  
-//if not aged brie or backstage pass reduce quality by 1
+
+            //if standard item (i.e. not aged brie or backstage pass) reduce quality by 1
             if (Items[i].Name != "Aged Brie" && Items[i].Name != "Backstage passes to a TAFKAL80ETC concert")
             {
-                if (Items[i].Quality > 0)
-                {
-                    Items[i].Quality = Items[i].Quality - 1;
-                }
+                Items[i].Quality = Math.Clamp(Items[i].Quality - 1, 0, 50);
             }
             else // must be aged brie or backstage pass
             {
