@@ -44,15 +44,8 @@ public class GildedRose
                 continue;
             }
 
-            //standard item
-            if (item.SellIn >= 0)
-            {
-                item.Quality = Math.Clamp(item.Quality - 1, 0, 50);
-            }
-            else
-            {
-                item.Quality = Math.Clamp(item.Quality - 2, 0, 50);
-            }
+            //must be standard item
+            HandleStandardItem(item);
 
         }
     }
@@ -91,4 +84,17 @@ public class GildedRose
             item.Quality = 0;
         }
     }
+
+    private void HandleStandardItem(Item item)
+    {
+        if (item.SellIn >= 0)
+        {
+            item.Quality = Math.Clamp(item.Quality - 1, 0, 50);
+        }
+        else
+        {
+            item.Quality = Math.Clamp(item.Quality - 2, 0, 50);
+        }
+    }
+
 }
