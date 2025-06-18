@@ -5,11 +5,13 @@
 - 13/06/25 Split tests into separate classes / tests. Created constants for numerical values.
 - 14/06/25 Refactored program to deal with special cases first and exit that iteration of loop as early as possible. The makes the code more readable and easier to understand rather than having multiple repeated nested if statements checking the names. Also moved to have specific statements to add/minus 1/2/3 to quality as required, rather than repeatedly adding +1/-1, again for readability/maintainability. It is easier to see what it happening when each situation is handled by a specific piece of code, rather than spread out across multiple if blocks.
 - 18/06/25 Refactored to use factory, interface with concrete classes defining the appropriate update method. Would have ben nice to use the Items class and update the property, but not allowed in terms of this Kata.
+- 18/06/35 Added Conjured Item type
 
 
 # Notes
-Could implement logging, validation etc but not the point of this kata
-Now got basic code refactored & understandable consider patterns / factory. With current number of 'special cases' not really necessary, but already have one change request for another (conjured items) and will inevitably be more. I'd also try to get some work onto The Goblins backlog for improvements to the Items class.  In real world would use change request to lobby for getting some extra time for program refactor so would stop having 'special cases' (the number of which will only increase) and implement a consistent factory / strategy pattern.  
+- Could implement logging, validation etc but not the point of this kata
+- Now got basic code refactored & understandable consider patterns / factory. With current number of 'special cases' not really necessary, but already have one change request for another (conjured items) and will inevitably be more.  In real world would use change request to lobby for getting some extra time for program refactor so would stop having 'special cases' (the number of which will only increase) and implement a consistent factory / strategy pattern.  I'd also try to get some work onto The Goblins backlog for improvements to the Items class to make the classes / interface a bit more streamlined.
+
 
 # Assumptions 
 Would normally verify these with product/client.
@@ -29,7 +31,7 @@ Would normally verify these with product/client.
 
 # TODO
 
-- Conjured items. Will do as change request after initial requirements are tested and delivered
+- ~~Conjured items. Will do as change request after initial requirements are tested and delivered~~
 - ~~Split out asserts into separate tests~~
 - ~~Name tests expressively~~
 - ~~Code should look for 'Backstage passes' not full Name~~

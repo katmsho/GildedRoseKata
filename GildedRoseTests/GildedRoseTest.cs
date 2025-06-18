@@ -22,7 +22,8 @@ public class GildedRoseTest {
     public const int QUALITY_CHANGE_PER_DAY_BACKSTAGE_PASS_10_DAYS = 1;
     public const int QUALITY_CHANGE_PER_DAY_BACKSTAGE_PASS_5_TO_10_DAYS = 2;
     public const int QUALITY_CHANGE_PER_DAY_BACKSTAGE_PASS_0_TO_5_DAYS = 3;
-
+    public const int QUALITY_CHANGE_PER_DAY_CONJURED = QUALITY_CHANGE_PER_DAY * 2;
+    public const int QUALITY_CHANGE_PER_DAY_AFTER_SELLIN_CONJURED = QUALITY_CHANGE_PER_DAY_AFTER_SELLIN * 2;
     public InventoryItemFactory itemFactory = new();
 
 }
@@ -41,38 +42,6 @@ public class GildedRoseAgedBrieNamingTest : GildedRoseTest {
             itemFactory.CreateItem("Very Aged Brie", 5, 7),
             itemFactory.CreateItem("aged brie", 5, 7),
             itemFactory.CreateItem("AGED BRIE", 5, 7),
-        };
-
-        gildedRoseApp = new GildedRose(this.currentItems);
-        this.previousItems = this.currentItems.Select(item => new Item { Name = item.Name, SellIn = item.SellIn, Quality = item.Quality }).ToList(); //need deep copy
-        gildedRoseApp.UpdateQuality();
-    }
-
-    [Test]
-    public void NamingOfSpecialCases() {
-        this.currentItems = gildedRoseApp.Items;
-
-        for (int i = 0; i < 3; i++) {
-            Assert.That(this.currentItems[i].Name == this.previousItems[i].Name);
-            Assert.That(this.currentItems[i].SellIn == this.previousItems[i].SellIn - 1);
-            Assert.That(this.currentItems[i].Quality == this.previousItems[i].Quality + QUALITY_CHANGE_PER_DAY);
-        }
-    }
-}
-
-public class GildedRoseSulfurasNamingTest : GildedRoseTest {
-    private GildedRose gildedRoseApp { get; set; }
-    private IList<Item> currentItems { get; set; }
-    private IList<Item> previousItems { get; set; }
-
-    [SetUp]
-    public void SetUp() {
-        this.previousItems = [];
-        this.currentItems = new List<Item>
-        {
-            itemFactory.CreateItem("Hand of Ragnaros, Sulfuras", 10, 40),
-            itemFactory.CreateItem("sulfuras, Hand of Ragnaros", 10, 40),
-            itemFactory.CreateItem("SULFURAS, Hand of Ragnaros", 10, 40),
         };
 
         gildedRoseApp = new GildedRose(this.currentItems);
@@ -124,6 +93,71 @@ public class GildedRoseBackstagePassesNamingTest : GildedRoseTest {
     }
 }
 
+
+public class GildedRoseConjuredNamingTest : GildedRoseTest {
+    private GildedRose gildedRoseApp { get; set; }
+    private IList<Item> currentItems { get; set; }
+    private IList<Item> previousItems { get; set; }
+
+    [SetUp]
+    public void SetUp() {
+        this.previousItems = [];
+        this.currentItems = new List<Item>
+        {
+            itemFactory.CreateItem("conjured", 15, 20),
+            itemFactory.CreateItem("CONJURED", 15, 20),
+        };
+
+        gildedRoseApp = new GildedRose(this.currentItems);
+        this.previousItems = this.currentItems.Select(item => new Item { Name = item.Name, SellIn = item.SellIn, Quality = item.Quality }).ToList(); //need deep copy
+        gildedRoseApp.UpdateQuality();
+    }
+
+    [Test]
+    public void NamingOfSpecialCases() {
+        this.currentItems = gildedRoseApp.Items;
+
+        for (int i = 0; i < 2; i++) {
+            Assert.That(this.currentItems[i].Name == this.previousItems[i].Name);
+            Assert.That(this.currentItems[i].SellIn == this.previousItems[i].SellIn - 1);
+            Assert.That(this.currentItems[i].Quality == this.previousItems[i].Quality + QUALITY_CHANGE_PER_DAY);
+        }
+    }
+}
+
+
+public class GildedRoseSulfurasNamingTest : GildedRoseTest {
+    private GildedRose gildedRoseApp { get; set; }
+    private IList<Item> currentItems { get; set; }
+    private IList<Item> previousItems { get; set; }
+
+    [SetUp]
+    public void SetUp() {
+        this.previousItems = [];
+        this.currentItems = new List<Item>
+        {
+            itemFactory.CreateItem("Hand of Ragnaros, Sulfuras", 10, 40),
+            itemFactory.CreateItem("sulfuras, Hand of Ragnaros", 10, 40),
+            itemFactory.CreateItem("SULFURAS, Hand of Ragnaros", 10, 40),
+        };
+
+        gildedRoseApp = new GildedRose(this.currentItems);
+        this.previousItems = this.currentItems.Select(item => new Item { Name = item.Name, SellIn = item.SellIn, Quality = item.Quality }).ToList(); //need deep copy
+        gildedRoseApp.UpdateQuality();
+    }
+
+    [Test]
+    public void NamingOfSpecialCases() {
+        this.currentItems = gildedRoseApp.Items;
+
+        for (int i = 0; i < 3; i++) {
+            Assert.That(this.currentItems[i].Name == this.previousItems[i].Name);
+            Assert.That(this.currentItems[i].SellIn == this.previousItems[i].SellIn - 1);
+            Assert.That(this.currentItems[i].Quality == this.previousItems[i].Quality + QUALITY_CHANGE_PER_DAY);
+        }
+    }
+}
+
 public class GildedRoseQualityTest : GildedRoseTest {
     private GildedRose gildedRoseApp { get; set; }
     private IList<Item> currentItems { get; set; }
@@ -153,6 +187,7 @@ public class GildedRoseQualityTest : GildedRoseTest {
             itemFactory.CreateItem("Backstage passes to a TAFKAL80ETC concert", 5, QUALITY_MAXIMUM),
             itemFactory.CreateItem("Backstage passes to a TAFKAL80ETC concert", 1, QUALITY_MAXIMUM),
             itemFactory.CreateItem("Backstage passes to a TAFKAL80ETC concert", 0, 0),
+            itemFactory.CreateItem("Conjured Mana Cake", 3, 6)
 
         };
 
@@ -163,7 +198,7 @@ public class GildedRoseQualityTest : GildedRoseTest {
         this.currentItems = gildedRoseApp.Items;
     }
 
-    // Basic tests on data: no quality value should be less than zero; no quality value should be greater than 50 (exception Sulfuras); Sulfurus quality = 80
+    // Basic tests on data: no quality value should be less than zero; no quality value should be greater than 50 (exception Sulfuras)
     [Test]
     public void QualityMaximumExceptSulfuras() {
         int numExpectedQualityGreaterThanMaximumAndNotSulfuras = 0;
@@ -215,41 +250,40 @@ public class GildedRoseQualityTest : GildedRoseTest {
     [Test]
     public void AgedBrieIncreasesQualityBy1PerDayBeforeSellIn() {
         List<ItemWithIndex> agedBrieItems = this.currentItems.Select((item, index) => new ItemWithIndex { Item = item, Index = index })
-                                            .Where(ItemWithIndex => ItemWithIndex.Item.Name.StartsWith("Aged Brie", System.StringComparison.CurrentCulture))
+                                            .Where(ItemWithIndex => ItemWithIndex.Item.Name.StartsWith("Aged Brie", System.StringComparison.CurrentCulture)
+                                            && ItemWithIndex.Item.SellIn >= 0)
                                             .ToList();
 
         foreach (ItemWithIndex agedBrie in agedBrieItems) {
             var currentAgedBrieQuality = agedBrie.Item.Quality;
             var previousAgedBrieQuality = previousItems[agedBrie.Index].Quality;
 
-            if (agedBrie.Item.SellIn >= 0) // aged brie past sellIn is covered on standard past-sellIn test
-            {
-                if (previousAgedBrieQuality == QUALITY_MAXIMUM) {
-                    Assert.That(currentAgedBrieQuality == previousAgedBrieQuality);
-                }
-                else {
-                    Assert.That(currentAgedBrieQuality == previousAgedBrieQuality + QUALITY_CHANGE_PER_DAY_AGED_BRIE);
-                }
+            if (previousAgedBrieQuality == QUALITY_MAXIMUM) {
+                Assert.That(currentAgedBrieQuality == previousAgedBrieQuality);
+            }
+            else {
+                Assert.That(currentAgedBrieQuality == Math.Clamp(previousAgedBrieQuality + QUALITY_CHANGE_PER_DAY_AGED_BRIE, QUALITY_MINIMUM, QUALITY_MAXIMUM));
+
             }
         }
     }
+
     [Test]
     public void AgedBrieIncreasesQualityBy2PerDayAfterSellIn() {
         List<ItemWithIndex> agedBrieItems = this.currentItems.Select((item, index) => new ItemWithIndex { Item = item, Index = index })
-                                            .Where(ItemWithIndex => ItemWithIndex.Item.Name.StartsWith("Aged Brie", System.StringComparison.CurrentCulture))
+                                            .Where(ItemWithIndex => ItemWithIndex.Item.Name.StartsWith("Aged Brie", System.StringComparison.CurrentCulture)
+                                            && ItemWithIndex.Item.SellIn < 0)
                                             .ToList();
 
         foreach (ItemWithIndex agedBrie in agedBrieItems) {
             var currentAgedBrieQuality = agedBrie.Item.Quality;
             var previousAgedBrieQuality = previousItems[agedBrie.Index].Quality;
 
-            if (agedBrie.Item.SellIn < 0) {
-                if (previousAgedBrieQuality == QUALITY_MAXIMUM) {
-                    Assert.That(currentAgedBrieQuality == previousAgedBrieQuality);
-                }
-                else {
-                    Assert.That(currentAgedBrieQuality == previousAgedBrieQuality + QUALITY_CHANGE_PER_DAY_AGED_BRIE_AFTER_SELLIN);
-                }
+            if (previousAgedBrieQuality == QUALITY_MAXIMUM) {
+                Assert.That(currentAgedBrieQuality == previousAgedBrieQuality);
+            }
+            else {
+                Assert.That(currentAgedBrieQuality == previousAgedBrieQuality + QUALITY_CHANGE_PER_DAY_AGED_BRIE_AFTER_SELLIN);
             }
         }
     }
@@ -277,7 +311,7 @@ public class GildedRoseQualityTest : GildedRoseTest {
                                         .ToList();
 
         foreach (ItemWithIndex backstagePass in backstagePassItems) {
-            Assert.That(backstagePass.Item.Quality == Math.Clamp(previousItems[backstagePass.Index].Quality + QUALITY_CHANGE_PER_DAY_BACKSTAGE_PASS_0_TO_5_DAYS, 0, QUALITY_MAXIMUM));
+            Assert.That(backstagePass.Item.Quality == Math.Clamp(previousItems[backstagePass.Index].Quality + QUALITY_CHANGE_PER_DAY_BACKSTAGE_PASS_0_TO_5_DAYS, QUALITY_MINIMUM, QUALITY_MAXIMUM));
         }
 
     }
@@ -291,7 +325,7 @@ public class GildedRoseQualityTest : GildedRoseTest {
                                         .ToList();
 
         foreach (ItemWithIndex backstagePass in backstagePassItems) {
-            Assert.That(backstagePass.Item.Quality == Math.Clamp(previousItems[backstagePass.Index].Quality + QUALITY_CHANGE_PER_DAY_BACKSTAGE_PASS_5_TO_10_DAYS, 0, QUALITY_MAXIMUM));
+            Assert.That(backstagePass.Item.Quality == Math.Clamp(previousItems[backstagePass.Index].Quality + QUALITY_CHANGE_PER_DAY_BACKSTAGE_PASS_5_TO_10_DAYS, QUALITY_MINIMUM, QUALITY_MAXIMUM));
         }
 
     }
@@ -304,10 +338,35 @@ public class GildedRoseQualityTest : GildedRoseTest {
                                         .ToList();
 
         foreach (ItemWithIndex backstagePass in backstagePassItems) {
-            Assert.That(backstagePass.Item.Quality == Math.Clamp(previousItems[backstagePass.Index].Quality + QUALITY_CHANGE_PER_DAY_BACKSTAGE_PASS_10_DAYS, 0, QUALITY_MAXIMUM));
+            Assert.That(backstagePass.Item.Quality == Math.Clamp(previousItems[backstagePass.Index].Quality + QUALITY_CHANGE_PER_DAY_BACKSTAGE_PASS_10_DAYS, QUALITY_MINIMUM, QUALITY_MAXIMUM));
         }
 
     }
+
+
+    //SPECIAL CASE: Conjured Items
+    public void ConjuredDecreasesQualityAtDoubleRate() {
+        List<ItemWithIndex> conjuredItems = this.currentItems.Select((item, index) => new ItemWithIndex { Item = item, Index = index })
+                                            .Where(ItemWithIndex => ItemWithIndex.Item.Name.StartsWith("Conjured", System.StringComparison.CurrentCulture))
+                                            .ToList();
+
+        foreach (ItemWithIndex conjured in conjuredItems) {
+            var currentConjuredQuality = conjured.Item.Quality;
+            var previousConjuredQuality = previousItems[conjured.Index].Quality;
+
+            if (previousConjuredQuality == QUALITY_MAXIMUM) {
+                Assert.That(currentConjuredQuality == previousConjuredQuality);
+            }
+
+            if (conjured.Item.SellIn >= 0) {
+                Assert.That(currentConjuredQuality == Math.Clamp(previousConjuredQuality + QUALITY_CHANGE_PER_DAY_CONJURED, QUALITY_MINIMUM, QUALITY_MAXIMUM));
+            }
+            else {
+                Assert.That(currentConjuredQuality == Math.Clamp(previousConjuredQuality + QUALITY_CHANGE_PER_DAY_AFTER_SELLIN_CONJURED, QUALITY_MINIMUM, QUALITY_MAXIMUM));
+            }
+        }
+    }
+
 
     //STANDARD CASE
     [Test]
@@ -316,11 +375,12 @@ public class GildedRoseQualityTest : GildedRoseTest {
             .Where(ItemWithIndex => !ItemWithIndex.Item.Name.StartsWith("Sulfuras", System.StringComparison.CurrentCulture)
             && !ItemWithIndex.Item.Name.StartsWith("Aged Brie", System.StringComparison.CurrentCulture)
             && !ItemWithIndex.Item.Name.StartsWith("Backstage passes", System.StringComparison.CurrentCulture)
+            && !ItemWithIndex.Item.Name.StartsWith("Conjured", System.StringComparison.CurrentCulture)
             && ItemWithIndex.Item.SellIn >= 0)
             .ToList();
 
         foreach (ItemWithIndex standardItem in standardItems) {
-            Assert.That(standardItem.Item.Quality == Math.Clamp(previousItems[standardItem.Index].Quality + QUALITY_CHANGE_PER_DAY, 0, QUALITY_MAXIMUM));
+            Assert.That(standardItem.Item.Quality == Math.Clamp(previousItems[standardItem.Index].Quality + QUALITY_CHANGE_PER_DAY, QUALITY_MINIMUM, QUALITY_MAXIMUM));
         }
 
     }
@@ -334,7 +394,7 @@ public class GildedRoseQualityTest : GildedRoseTest {
             .ToList();
 
         foreach (ItemWithIndex standardItem in standardItems) {
-            Assert.That(standardItem.Item.Quality == Math.Clamp(previousItems[standardItem.Index].Quality + QUALITY_CHANGE_PER_DAY_AFTER_SELLIN, 0, QUALITY_MAXIMUM));
+            Assert.That(standardItem.Item.Quality == Math.Clamp(previousItems[standardItem.Index].Quality + QUALITY_CHANGE_PER_DAY_AFTER_SELLIN, QUALITY_MINIMUM, QUALITY_MAXIMUM));
         }
 
     }
