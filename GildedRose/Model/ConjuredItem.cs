@@ -12,7 +12,8 @@ public class ConjuredItem : IInventoryItem {
     }
 
     /// <summary>
-    /// Does not change Quality or SellIn values
+    ///Quality decreases by double standard as its SellIn value approaches
+    ///Quality decreases by double standard after SellIn
     /// </summary>
     public override void UpdateQuality() {
         this.SellIn -= 1;

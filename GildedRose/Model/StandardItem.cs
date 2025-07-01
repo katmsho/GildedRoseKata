@@ -9,7 +9,7 @@ public class StandardItem : IInventoryItem {
 
     /// <summary>
     ///Quality decreases by 1 as its SellIn value approaches
-    ///Quality decreases by 1 after SellIn
+    ///Quality decreases by 2 after SellIn
     /// </summary>
     public override void UpdateQuality() {
         this.SellIn -= 1;
